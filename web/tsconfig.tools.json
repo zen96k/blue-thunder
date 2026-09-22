@@ -1,5 +1,5 @@
 {
   "extends": "./.nuxt/tsconfig.node.json",
-  "include": ["./drizzle.config.ts", "./scripts/**/*.ts"],
+  "include": ["./drizzle.config.ts"],
   "compilerOptions": { "noEmit": true }
 }
