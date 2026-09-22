@@ -10,6 +10,7 @@ if (!url) {
 
 // libSQL と同じ解釈で URL を読む（大文字の FILE: や %20 などのエンコードも扱える）
 const { scheme, path } = expandConfig({ url }, false)
+const authToken = process.env.TURSO_AUTH_TOKEN
 
 // 開発環境の SQLite ファイル（file:.data/dev.db など）
 if (scheme === "file") {
@@ -25,5 +26,6 @@ export default defineConfig({
   dialect: "turso",
   schema: "./server/db/schema.ts",
   out: "./server/db/migrations",
-  dbCredentials: { url, authToken: process.env.TURSO_AUTH_TOKEN },
+  // 空文字列だと drizzle-kit が「未設定」と判断して失敗するので、その場合は項目ごと省く
+  dbCredentials: { url, ...(authToken ? { authToken } : {}) },
 })
