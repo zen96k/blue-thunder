@@ -4,9 +4,10 @@ const USER_AGENT = "blue-thunder (+https://github.com/zen96k/blue-thunder)"
 /**
  * すべての取得元で共通して使う ofetch の設定。
  *
- * - `timeout`: 応答がないときに待ち続けないよう 15 秒で打ち切る
+ * - `timeout`: 応答がないときに待ち続けないよう、最初のリクエストを 15 秒で打ち切る
  * - `retry` / `retryDelay`: 一時的な失敗のために 1 秒あけて 2 回まで再試行する
- *   （最悪の場合、1 つの取得元に約 3 回 × 15 秒かかる）
+ *   （ofetch は再試行に同じ signal を引き継ぎ、新しいタイマーを設定しない。
+ *   そのためタイムアウト後の再試行は即座に失敗し、応答が返ってからの再試行には時間の上限がない）
  */
 export const FETCH_OPTIONS = {
   headers: { "user-agent": USER_AGENT },
@@ -18,8 +19,8 @@ export const FETCH_OPTIONS = {
 /**
  * 記事の URL から、クエリとフラグメントを取り除く。
  *
- * articles テーブルは URL で重複を判定するため、Qiita のフィードに付く計測用のパラメーター
- * （`?utm_campaign=popular_items` など）が残っていると、同じ記事が別の行として保存されてしまう。
+ * 重複の判定には URL 末尾の ID を使う（extractProviderKey）。Qiita のフィードの URL には
+ * 計測用のパラメーター（`?utm_campaign=popular_items` など）が付くので、取り除いてから ID を取り出す。
  *
  * @param url 取得元から受け取った URL
  * @returns クエリとフラグメントを取り除いた URL

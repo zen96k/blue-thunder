@@ -31,7 +31,7 @@ export type Article = {
  * ```
  */
 export type Source = {
-  /** 取得元の名前。ログの表示と、記事の platform に使う */
+  /** 取得元の名前。実行結果とログの表示に使う。返す記事の platform と同じ値にすること */
   name: Platform
   /**
    * 記事を取得して、共通の形に変換する。

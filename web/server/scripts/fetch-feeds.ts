@@ -1,10 +1,10 @@
 /**
- * Qiita と Zenn の人気記事を取得して保存する（GitHub Actions から 1 時間ごとに実行する）。
+ * Qiita と Zenn の人気記事を取得して保存する（GitHub Actions から 1 時間ごとに実行する想定。ワークフローは未実装）。
  *
  * 実際の取得元（adapters）と保存先（repository）を、ここで組み合わせる。
  * 取得元ごとの結果を表示し、1 つでも失敗していれば終了コード 1 で終わる。
  *
- * 使い方: `npm run fetch-feeds`（.env の TURSO_DATABASE_URL を読む）
+ * 使い方: web/ で `node --env-file-if-exists=.env server/scripts/fetch-feeds.ts`
  */
 import { createDb } from "../db/client.ts"
 import { qiita } from "../feeds/adapters/qiita.ts"

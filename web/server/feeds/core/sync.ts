@@ -8,7 +8,7 @@ type Fetched =
 /**
  * 1つの取得元から記事を取得する。失敗しても投げ返さず、結果として返す。
  *
- * この関数自体が async なので、`fetch()` が Promise を返す前に同期的に例外を投げた場合も
+ * `fetch()` の呼び出しと await を try/catch で囲むので、同期的に投げた例外も Promise の拒否も
  * ここで受け止められる。取得元を増やしたときに、失敗が他の取得元へ波及しないようにするため。
  *
  * @param source 取得元
@@ -33,7 +33,7 @@ const fetchSource = async (source: Source): Promise<Fetched> => {
  * 失敗は例外として投げず、戻り値に含める。表示と終了コードの決定は呼び出し側の責務。
  *
  * @param sources 取得元の一覧
- * @param save 記事の保存先。取得元ごとに1回ずつ呼ばれる
+ * @param save 記事の保存先。取得に成功した取得元ごとに1回ずつ呼ばれる（記事が0件でも呼ぶ）
  * @returns 取得元ごとの結果。並び順は `sources` と同じ
  *
  * @example

@@ -6,7 +6,7 @@ import { dirname } from "node:path"
  * 接続先を環境変数から読み、libSQL に渡す形にする。
  * drizzle.config.ts（マイグレーション）と client.ts（実行時）の両方から使う。
  *
- * TURSO_DATABASE_URL が `file:` で始まる場合は開発環境とみなし、
+ * libSQL が接続先を `file` スキームと解釈する場合（`FILE:` などの表記も含む）は開発環境とみなし、
  * 親フォルダーを作ってから返す（libSQL はフォルダーを作らないため）。
  *
  * @returns libSQL の接続設定。TURSO_AUTH_TOKEN が空のときは authToken を含めない

@@ -14,13 +14,15 @@ INSERT INTO `__new_articles`(`id`, `platform`, `provider_key`, `url`, `title`, `
 SELECT
 	`id`,
 	`platform`,
-	-- 実行時と同じ規則: URL の最後の部分（/ より後ろ）を記事の ID とする
+	-- URL の最後の部分（/ より後ろ）をそのまま記事の ID とする（実行時と違い、デコードや文字の検査はしない）
 	replace(`url`, rtrim(`url`, replace(`url`, '/', '')), ''),
 	`url`, `title`, `author`, `published_at`, `created_at`, `updated_at`
 FROM `articles`;--> statement-breakpoint
--- 実行時（extractProviderKey）と同じ形以外の URL が残っていたら、ここで失敗させる。
+-- 想定する形以外の URL が残っていたら、ここで失敗させる。
 -- 蓄積した記事を勝手に消さず、人が確認して直せるようにするため（provider_key が NOT NULL なので中断する）。
 -- 想定する形: https://qiita.com/{ユーザー}/items/{ID} と https://zenn.dev/{ユーザーまたは Publication}/articles/{slug}
+-- 実行時（extractProviderKey）の検査とは完全には一致しない。パーセントエンコードを含む URL は、
+-- 実行時なら通るものも含めて、人が確認できるようにここで中断させる。
 INSERT INTO `__new_articles`(`id`, `platform`, `provider_key`, `url`, `title`, `author`, `published_at`, `created_at`, `updated_at`)
 SELECT `id`, `platform`, NULL, `url`, `title`, `author`, `published_at`, `created_at`, `updated_at`
 FROM `articles`
