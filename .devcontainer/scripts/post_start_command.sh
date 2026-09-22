@@ -12,3 +12,7 @@ cd ${PROJECT_DIRNAME}
 git config user.name "${GIT_USER_NAME}"
 git config user.email "${GIT_USER_EMAIL}"
 git config fetch.prune true
+
+cd ${PROJECT_DIRNAME}/web
+mise install
+mise exec -- npm clean-install
