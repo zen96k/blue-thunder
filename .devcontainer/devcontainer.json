@@ -29,7 +29,8 @@
         "eamodio.gitlens",
         "esbenp.prettier-vscode",
         "MS-CEINTL.vscode-language-pack-ja",
-        "vscode-icons-team.vscode-icons"
+        "vscode-icons-team.vscode-icons",
+        "Vue.volar"
       ]
     }
   },
