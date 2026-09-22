@@ -8,10 +8,7 @@
     "ghcr.io/devcontainers-extra/features/mise": {}
   },
   "init": true,
-  "runArgs": [
-    "--env-file",
-    ".devcontainer/devcontainer.env"
-  ],
+  "runArgs": ["--env-file", ".devcontainer/devcontainer.env"],
   "forwardPorts": [],
   "mounts": [
     "source=${localWorkspaceFolder}/home/vscode/.claude,target=/home/vscode/.claude,type=bind",
