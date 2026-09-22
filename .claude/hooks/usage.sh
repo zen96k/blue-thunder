@@ -5,6 +5,10 @@
 [ -n "${USAGE_HOOK_RUNNING:-}" ] && exit 0
 export USAGE_HOOK_RUNNING=1
 
+# フックは作業中のディレクトリで実行される。web/ の mise.toml（Node.js 24）が効くと、
+# 全体の Node.js に入れた claude / codex の shim が動かないので、リポジトリの直下で実行する
+cd "${CLAUDE_PROJECT_DIR:-$(dirname "$0")/../..}" || exit 0
+
 # claude の実行ファイル。PATH になければ、VS Code 拡張機能の同梱版を使う
 claude_bin=$(command -v claude || ls -d "$HOME"/.vscode-server/extensions/anthropic.claude-code-*/resources/native-binary/claude 2>/dev/null | sort -V | tail -1)
 

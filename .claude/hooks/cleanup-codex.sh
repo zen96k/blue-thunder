@@ -7,6 +7,10 @@
 # usage.sh から起動した claude では実行しない
 [ -n "${USAGE_HOOK_RUNNING:-}" ] && exit 0
 
+# フックは作業中のディレクトリで実行される。web/ の mise.toml（Node.js 24）が効くと、
+# 全体の Node.js に入れた codex の shim が動かないので、リポジトリの直下で実行する
+cd "${CLAUDE_PROJECT_DIR:-$(dirname "$0")/../..}" || exit 0
+
 codex_bin=$(command -v codex || echo "$HOME/.local/share/mise/shims/codex")
 codex_home=${CODEX_HOME:-$HOME/.codex}
 cutoff=$(($(date +%s) - 30 * 86400))
