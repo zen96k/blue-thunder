@@ -24,6 +24,7 @@
     "@nuxt/eslint": "1.17.0",
     "eslint": "10.11.0",
     "prettier": "3.9.8",
+    "prettier-plugin-organize-imports": "4.3.0",
     "typescript": "6.0.3",
     "vue-tsc": "3.3.11"
   }
