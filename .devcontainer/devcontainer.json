@@ -1,0 +1,41 @@
+{
+  "name": "blue-thunder-devcontainer",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker": {
+      "moby": "false"
+    },
+    "ghcr.io/devcontainers-extra/features/mise": {}
+  },
+  "init": true,
+  "runArgs": [
+    "--env-file",
+    ".devcontainer/devcontainer.env"
+  ],
+  "forwardPorts": [],
+  "mounts": [
+    "source=${localWorkspaceFolder}/home/vscode/.claude,target=/home/vscode/.claude,type=bind",
+    "source=${localWorkspaceFolder}/home/vscode/.codex,target=/home/vscode/.codex,type=bind",
+    "source=${localWorkspaceFolder}/home/vscode/.zshrc,target=/home/vscode/.zshrc,type=bind"
+  ],
+  "remoteEnv": {
+    "PATH": "/home/vscode/.local/share/mise/shims:${containerEnv:PATH}"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "anthropic.claude-code",
+        "dbaeumer.vscode-eslint",
+        "eamodio.gitlens",
+        "esbenp.prettier-vscode",
+        "MS-CEINTL.vscode-language-pack-ja",
+        "vscode-icons-team.vscode-icons"
+      ]
+    }
+  },
+  "initializeCommand": "bash .devcontainer/scripts/initialize_command.sh",
+  "onCreateCommand": "bash .devcontainer/scripts/on_create_command.sh",
+  "postStartCommand": "bash .devcontainer/scripts/post_start_command.sh",
+  "postAttachCommand": "bash .devcontainer/scripts/post_attach_command.sh",
+  "waitFor": "postStartCommand"
+}
